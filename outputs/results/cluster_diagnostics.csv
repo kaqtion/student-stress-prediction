@@ -1,0 +1,5 @@
+cluster,n_train,n_test_assigned,n_stress_classes,dominant_fraction,cluster_type,hybrid_routing,internal_accuracy,internal_macro_f1,note
+0,248,52,1,1.0,Pure,TrivialPredictor,1.0,1.0,internal eval on cluster train-split -- NOT global test set
+1,246,62,3,0.984,Near-Pure,RandomForest,0.98,0.4949,internal eval on cluster train-split -- NOT global test set
+2,239,61,1,1.0,Pure,TrivialPredictor,1.0,1.0,internal eval on cluster train-split -- NOT global test set
+3,147,45,3,0.361,Mixed,RandomForest,0.3667,0.3292,internal eval on cluster train-split -- NOT global test set

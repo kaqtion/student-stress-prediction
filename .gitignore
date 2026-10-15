@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Large raw dataset (not used by the pipeline)
+data/raw/SSAQS dataset/
+
+# Regenerable trained models (run `python main.py`)
+outputs/models/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/

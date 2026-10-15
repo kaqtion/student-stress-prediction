@@ -1,0 +1,2 @@
+pure_clusters,n_test_in_pure_clusters,f1_hybrid_full,f1_hybrid_no_trivial,gain_from_trivial_routing
+"[0, 2]",113,0.8729,0.8729,0.0

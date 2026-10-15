@@ -1,0 +1,5 @@
+cluster,dominant_stress,n_train,anxiety_level,self_esteem,mental_health_history,depression,headache,blood_pressure,sleep_quality,breathing_problem,noise_level,living_conditions,safety,basic_needs,academic_performance,study_load,teacher_student_relationship,future_career_concerns,social_support,peer_pressure,extracurricular_activities,bullying,psychological_burden,academic_stress,wellbeing_index,environmental_stress,support_deficit
+0,Low,248,0.196,0.9138,0.0,0.1522,0.2,0.5,0.8944,0.2992,0.2771,0.756,0.8935,0.9081,0.8944,0.249,0.8927,0.2,1.0,0.3056,0.2976,0.2,0.1517,0.2586,0.9123,0.2678,0.071
+1,High,246,0.8535,0.2699,1.0,0.7892,0.7878,1.0,0.2024,0.7902,0.7974,0.2647,0.3081,0.3016,0.3008,0.8298,0.2984,0.8976,0.332,0.8976,0.887,0.8902,0.8151,0.8483,0.1812,0.8487,0.8325
+2,Medium,239,0.5407,0.6678,0.5105,0.4303,0.5046,0.0,0.487,0.6142,0.4902,0.4984,0.4937,0.4979,0.4962,0.4922,0.5013,0.4904,0.8326,0.4862,0.4929,0.5121,0.4512,0.526,0.4912,0.5274,0.3919
+3,High,147,0.4895,0.5032,0.415,0.4885,0.5333,1.0,0.5673,0.4844,0.5196,0.5187,0.4639,0.483,0.5061,0.4991,0.3796,0.5143,0.1769,0.4476,0.483,0.4449,0.5044,0.513,0.4354,0.5057,0.5587

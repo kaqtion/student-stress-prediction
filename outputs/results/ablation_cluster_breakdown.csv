@@ -1,0 +1,5 @@
+cluster,n_test,dominant_class,class_purity,acc_Hybrid,acc_Baseline_RF,acc_XGBoost_tuned,acc_LogisticReg
+0,52,1,1.0,1.0,1.0,1.0,1.0
+1,62,0,0.968,0.9677,0.9677,0.9839,0.9677
+2,61,2,1.0,1.0,1.0,1.0,1.0
+3,45,1,0.489,0.4222,0.3111,0.3333,0.4

@@ -1,0 +1,64 @@
+EXPERIMENT LOG — Student Stress Prediction Pipeline
+====================================================
+Run timestamp : 2026-10-15 22:35:13
+Data source   : real_csv
+
+RANDOM SEEDS
+  Global seed (train/test split, K-Means, CV, bootstrap): 42
+
+PREPROCESSING  (all statistics fitted on training set only)
+  1. Duplicate removal          — stateless
+  2. Target label encoding      — stateless
+  3. Mean imputation            — fitted on train, applied to train+test
+  4. IQR outlier capping (1.5x) — fitted on train, applied to train+test
+  5. MinMax scaling [0, 1]      — fitted on train, applied to train+test
+  Train/test split: 80/20, stratified on stress_level_encoded
+
+FEATURE ENGINEERING  (5 composite features)
+  psychological_burden = anxiety*0.35 + depression*0.35 - self_esteem*0.30
+  academic_stress      = study_load*0.40 + peer_pressure*0.30 - academic_performance*0.30
+  wellbeing_index      = sleep_quality + social_support + safety + basic_needs
+                       - headache - breathing_problem
+  environmental_stress = noise*0.40 + bullying*0.40 - living_conditions*0.20
+  support_deficit      = peer_pressure + future_career_concerns
+                       - social_support - teacher_student_relationship
+
+CLUSTERING
+  K selection : silhouette score over K in {2, 3, 4, 5, 6}
+  Optimal K   : 4
+  Primary method   : KMeans (n_init=10, random_state=42)
+  Ablation methods : GMM (full covariance, n_init=3),
+                     Hierarchical (Ward linkage + nearest-centroid predict)
+
+HYBRID CLASSIFIER
+  Per-cluster candidates : RandomForest(100 trees), XGBoost, LogisticRegression,
+                           DummyClassifier (for pure/near-pure clusters)
+  Specialist selection   : highest internal macro-F1 on cluster train split
+  Routing                : K-Means cluster assignment -> per-cluster specialist
+
+GLOBAL BASELINES
+  RandomForest   : n_estimators=100, random_state=42
+  XGBoost (tuned): RandomizedSearchCV n_iter=15, cv=3, scoring=f1_macro
+    Search space : n_estimators=[100,200,300], max_depth=[3,5,7],
+                   learning_rate=[0.05,0.1,0.2], subsample=[0.7,0.9,1.0],
+                   colsample_bytree=[0.7,0.9,1.0]
+    Best params  : colsample_bytree=1.0, learning_rate=0.2, max_depth=5, n_estimators=300, subsample=0.9
+  LogisticReg    : max_iter=2000, random_state=42
+
+EVALUATION PROTOCOL
+  Primary metric       : Macro-F1 (equal class weight, robust to class imbalance)
+  Secondary metrics    : Accuracy, Balanced Accuracy, per-class P/R/F1
+  Baseline CV          : 5×3 Repeated Stratified K-Fold (15 folds)
+  Hybrid nested CV     : 5×2 Repeated Stratified K-Fold (10 outer folds,
+                         full pipeline re-fitted from scratch each fold)
+  Hybrid nested CV result: 0.8898 +/- 0.0213  (per-fold: 0.8577, 0.8519, 0.8925, 0.8976, 0.9205, 0.9092, 0.8981, 0.8866, 0.9091, 0.8751)
+  Statistical test     : McNemar with Yates continuity correction (paired, same test set)
+  Bootstrap CI         : percentile method, n=1000 resamples, alpha=0.05, seed=42
+  Cluster ablation     : per-cluster accuracy for hybrid vs all baselines
+  Trivial-cluster probe: pure-cluster predictions replaced by global RF
+                         to isolate routing gain from trivial majority-class assignment
+
+TARGET VARIABLE
+  Primary  : stress_level (Low / Medium / High) — real survey labels
+  Excluded : burnout — SYNTHETIC label derived from formula (not real ground-truth);
+             excluded from all pipeline claims to avoid inflating results
